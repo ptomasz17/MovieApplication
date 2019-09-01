@@ -2,3 +2,26 @@
     background-color: #4e4f52 !important;
     color: white;
 }
+
+.plot {
+    padding-top: 3vh;
+    color: rgb(211,
+            211,
+            211)
+}
+
+.rating {
+    display: flex;
+    justify-content: center;
+}
+
+.details {
+    padding-top: 1.5vh;
+    color: rgb(155, 155, 155)
+}
+
+.button {
+    position: absolute;
+    margin-left: 1rem;
+    bottom: 0;
+}

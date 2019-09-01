@@ -1,6 +1,7 @@
-import React, { useState } from "react";
-import { searchMovieRequest } from "../../../Services/omdbApi";
-import searchListMap from "../mapping/searchListMap";
+import React, { useState, useEffect, useReducer } from "react";
+import { searchMovieRequest, getMovieRequest } from "../../../Services/omdbApi";
+import { searchListMap, movieMap } from "../mapping/searchListMap";
+import searchListReducer from "./reducers/searchListReducer";
 
 export const RootContext = React.createContext();
 
@@ -8,7 +9,7 @@ function RootProvider(props) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [searchPhrase, setSearchPhrase] = useState("");
-  const [searchList, setSearchList] = useState({});
+  const [searchList, searchListDispatch] = useReducer(searchListReducer, {});
   const [response, setResponse] = useState(null);
 
   const search = value => {
@@ -16,7 +17,26 @@ function RootProvider(props) {
     setSearchPhrase(value);
     searchMovieRequest(value, 1)
       .then(response => {
-        setSearchList(response.data.Search.reduce(searchListMap, {}));
+        var result = response.data.Search.reduce(searchListMap, {});
+
+        searchListDispatch({
+          type: "add",
+          payload: result
+        });
+        Object.keys(result).map(item => {
+          getMovieRequest(item)
+            .then(response => {
+              searchListDispatch({
+                type: "update",
+                id: item,
+                payload: movieMap(response.data)
+              });
+            })
+            .catch(error => {
+              setError(error);
+              setIsLoading(false);
+            });
+        });
         setResponse(response.data.Response);
         setIsLoading(false);
       })
