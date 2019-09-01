@@ -11,39 +11,50 @@ function RootProvider(props) {
   const [searchPhrase, setSearchPhrase] = useState("");
   const [searchList, searchListDispatch] = useReducer(searchListReducer, {});
   const [response, setResponse] = useState(null);
+  const [results, setResults] = useState(0);
+  const [page, setPage] = useState(1);
 
   const search = value => {
-    setIsLoading(true);
-    setSearchPhrase(value);
-    searchMovieRequest(value, 1)
-      .then(response => {
-        var result = response.data.Search.reduce(searchListMap, {});
-
-        searchListDispatch({
-          type: "add",
-          payload: result
-        });
-        Object.keys(result).map(item => {
-          getMovieRequest(item)
-            .then(response => {
-              searchListDispatch({
-                type: "update",
-                id: item,
-                payload: movieMap(response.data)
-              });
-            })
-            .catch(error => {
-              setError(error);
-              setIsLoading(false);
-            });
-        });
-        setResponse(response.data.Response);
-        setIsLoading(false);
-      })
-      .catch(error => {
-        setError(error);
-        setIsLoading(false);
+    if (value === "") {
+      searchListDispatch({
+        type: "reset"
       });
+      setResponse(null);
+      setResults(0);
+    } else {
+      setIsLoading(true);
+      setSearchPhrase(value);
+      searchMovieRequest(value, 1)
+        .then(response => {
+          var result = response.data.Search.reduce(searchListMap, {});
+
+          searchListDispatch({
+            type: "add",
+            payload: result
+          });
+          Object.keys(result).map(item => {
+            getMovieRequest(item)
+              .then(response => {
+                searchListDispatch({
+                  type: "update",
+                  id: item,
+                  payload: movieMap(response.data)
+                });
+              })
+              .catch(error => {
+                setError(error);
+                setIsLoading(false);
+              });
+          });
+          setResponse(response.data.Response);
+          setResults(response.data.totalResults);
+          setIsLoading(false);
+        })
+        .catch(error => {
+          setError(error);
+          setIsLoading(false);
+        });
+    }
   };
 
   return (
@@ -54,7 +65,10 @@ function RootProvider(props) {
         search,
         searchPhrase,
         searchList,
-        response
+        response,
+        results,
+        page,
+        setPage
       }}
     >
       {props.children}

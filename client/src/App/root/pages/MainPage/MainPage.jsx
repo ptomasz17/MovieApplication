@@ -6,6 +6,7 @@ import { DebounceInput } from "react-debounce-input";
 import { RootContext } from "../../context/RootProvider";
 import { FaTimes } from "react-icons/fa";
 import MovieElement from "../../components/MovieElement/MovieElement";
+import Pagination from "../../components/Pagination/Pagination";
 
 function MainPage(props) {
   const rootContext = useContext(RootContext);
@@ -13,7 +14,7 @@ function MainPage(props) {
   return (
     <div className={cx("container", styles.mainPage)}>
       <Jumbotron className={styles.searchBox}>
-        <h4>Type title of movie: </h4>
+        <h4>Type the title you would like to find: </h4>
         <DebounceInput
           autoComplete="off"
           debounceTimeout={300}
@@ -41,6 +42,11 @@ function MainPage(props) {
         Object.keys(rootContext.searchList).map(item => (
           <MovieElement key={item} data={rootContext.searchList[item]} />
         ))
+      )}
+      {rootContext.results === 0 ? null : (
+        <div className={styles.pagination}>
+          <Pagination />
+        </div>
       )}
     </div>
   );

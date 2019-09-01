@@ -43,3 +43,7 @@
     width: 5rem !important;
     height: 5rem !important;
 }
+
+.pagination {
+    float: right
+}
