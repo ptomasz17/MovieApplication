@@ -4,14 +4,17 @@ import { searchMovieRequest } from "../../../Services/omdbApi";
 export const RootContext = React.createContext();
 
 function RootProvider(props) {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [searchPhrase, setSearchPhrase] = useState("");
+  const [searchList, setSearchList] = useState({});
 
-  const search = () => {
+  const search = value => {
     setIsLoading(true);
-    searchMovieRequest("lala", 1)
+    setSearchPhrase(value);
+    searchMovieRequest(value, 1)
       .then(response => {
-        console.info(response.data);
+        setSearchList(response.data);
         setIsLoading(false);
       })
       .catch(error => {
@@ -25,7 +28,9 @@ function RootProvider(props) {
       value={{
         isLoading,
         error,
-        search
+        search,
+        searchPhrase,
+        searchList
       }}
     >
       {props.children}

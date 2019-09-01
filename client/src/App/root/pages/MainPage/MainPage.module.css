@@ -23,3 +23,23 @@
     width: 5rem !important;
     height: 5rem !important;
 }
+
+.noResult {
+    display: flex;
+    justify-content: center;
+    color: white;
+    padding-top: 2vh;
+}
+
+.noResultIcon {
+    display: flex;
+    justify-content: center;
+    color: white;
+    padding-top: 10vh;
+
+}
+
+.icon {
+    width: 5rem !important;
+    height: 5rem !important;
+}
