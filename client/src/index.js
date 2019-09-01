@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import * as serviceWorker from "./serviceWorker";
 import RootProvider from "./App/root/context/RootProvider";
 import Root from "./App/root/Root";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 ReactDOM.render(
   <RootProvider>
