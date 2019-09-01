@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import cx from "classnames";
 import styles from "./MainPage.module.css";
-import { Jumbotron, Input } from "reactstrap";
+import { Jumbotron, Spinner } from "reactstrap";
 import { DebounceInput } from "react-debounce-input";
+import { RootContext } from "../../context/RootProvider";
 
 function MainPage(props) {
+  const rootContext = useContext(RootContext);
+
   return (
     <div className={cx("container", styles.mainPage)}>
       <Jumbotron className={styles.searchBox}>
@@ -18,6 +21,11 @@ function MainPage(props) {
           placeholder="Search..."
         />
       </Jumbotron>
+      {rootContext.isLoading ? (
+        <div className={styles.loader}>
+          <Spinner color="light" className={styles.spinner} />
+        </div>
+      ) : null}
     </div>
   );
 }

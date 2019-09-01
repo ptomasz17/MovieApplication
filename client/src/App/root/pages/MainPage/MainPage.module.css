@@ -12,3 +12,14 @@
     color: #b5c4d1 !important;
     background-color: #343a40 !important;
 }
+
+.loader {
+    display: flex;
+    justify-content: center;
+    padding-top: 20vh;
+}
+
+.spinner {
+    width: 5rem !important;
+    height: 5rem !important;
+}
