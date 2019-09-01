@@ -1,6 +1,6 @@
 import React from "react";
 import { Navbar, NavbarBrand, Nav, NavItem, NavLink } from "reactstrap";
-import { FaSearch, FaVideo } from "react-icons/fa";
+import { FaVideo } from "react-icons/fa";
 import styles from "./Header.module.css";
 
 function Header(props) {

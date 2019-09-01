@@ -1,0 +1,14 @@
+.mainPage {
+    padding-top: 10vh;
+}
+
+.searchBox {
+    background-color: #333333 !important;
+    color: white;
+}
+
+.input {
+    margin-top: 3rem;
+    color: #b5c4d1 !important;
+    background-color: #343a40 !important;
+}

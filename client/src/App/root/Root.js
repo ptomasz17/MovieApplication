@@ -11,7 +11,7 @@ import DetailsPage from "./pages/DetailsPage/DetailsPage";
 
 function Root(props) {
   return (
-    <div className="App">
+    <div className="app">
       <Router>
         <Header />
         <Switch>
