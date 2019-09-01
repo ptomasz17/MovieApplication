@@ -1,13 +1,13 @@
 import React from "react";
 import { Jumbotron, Row, Col, Button } from "reactstrap";
+import { Link } from "react-router-dom";
 import styles from "./MovieElement.module.css";
 
 function MovieElement(props) {
-  const { data } = props;
+  const { data, id } = props;
 
   return (
     <Jumbotron className={styles.movieElement}>
-      {console.info(data)}
       <Row>
         <Col xs="5">
           <img src={data.poster} alt={data.title} />
@@ -27,7 +27,12 @@ function MovieElement(props) {
         </Col>
         <Col xs="2">
           <h2 className={styles.rating}>{data.rating} / 10</h2>
-          <Button className={styles.button}>See more</Button>
+          <Link
+            to={`/movie/${id}`}
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
+            <Button className={styles.button}>See more</Button>
+          </Link>
         </Col>
       </Row>
     </Jumbotron>

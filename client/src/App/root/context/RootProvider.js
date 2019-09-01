@@ -14,7 +14,12 @@ function RootProvider(props) {
   const [results, setResults] = useState(0);
   const [page, setPage] = useState(1);
 
+  useEffect(() => {
+    search(searchPhrase);
+  }, [page]);
+
   const search = value => {
+    setSearchPhrase(value);
     if (value === "") {
       searchListDispatch({
         type: "reset"
@@ -23,8 +28,7 @@ function RootProvider(props) {
       setResults(0);
     } else {
       setIsLoading(true);
-      setSearchPhrase(value);
-      searchMovieRequest(value, 1)
+      searchMovieRequest(value, page)
         .then(response => {
           var result = response.data.Search.reduce(searchListMap, {});
 
@@ -57,6 +61,19 @@ function RootProvider(props) {
     }
   };
 
+  const getMovie = (id, setData) => {
+    setIsLoading(true);
+    getMovieRequest(id)
+      .then(response => {
+        setData(response.data);
+        setIsLoading(false);
+      })
+      .catch(error => {
+        setError(error);
+        setIsLoading(false);
+      });
+  };
+
   return (
     <RootContext.Provider
       value={{
@@ -68,7 +85,8 @@ function RootProvider(props) {
         response,
         results,
         page,
-        setPage
+        setPage,
+        getMovie
       }}
     >
       {props.children}

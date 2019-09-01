@@ -40,7 +40,11 @@ function MainPage(props) {
         </div>
       ) : (
         Object.keys(rootContext.searchList).map(item => (
-          <MovieElement key={item} data={rootContext.searchList[item]} />
+          <MovieElement
+            key={item}
+            data={rootContext.searchList[item]}
+            id={item}
+          />
         ))
       )}
       {rootContext.results === 0 ? null : (
