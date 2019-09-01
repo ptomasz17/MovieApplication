@@ -5,6 +5,7 @@ import { Jumbotron, Spinner, Row } from "reactstrap";
 import { DebounceInput } from "react-debounce-input";
 import { RootContext } from "../../context/RootProvider";
 import { FaTimes } from "react-icons/fa";
+import MovieElement from "../../components/MovieElement/MovieElement";
 
 function MainPage(props) {
   const rootContext = useContext(RootContext);
@@ -26,8 +27,8 @@ function MainPage(props) {
         <div className={styles.loader}>
           <Spinner color="light" className={styles.spinner} />
         </div>
-      ) : rootContext.searchPhrase === "" ? null : rootContext.searchList
-          .Response === "False" ? (
+      ) : rootContext === "" ? null : rootContext.searchList.response ===
+        "False" ? (
         <div>
           <Row className={styles.noResultIcon}>
             <FaTimes className={styles.icon} />
@@ -37,14 +38,9 @@ function MainPage(props) {
           </Row>
         </div>
       ) : (
-        <>
-          <Jumbotron className={styles.searchBox}>
-            {rootContext.searchList.Search[0].Title}
-          </Jumbotron>
-          <Jumbotron className={styles.searchBox}>
-            {rootContext.searchList.Search[1].Title}
-          </Jumbotron>
-        </>
+        Object.keys(rootContext.searchList).map(item => (
+          <MovieElement key={item} data={rootContext.searchList[item]} />
+        ))
       )}
     </div>
   );

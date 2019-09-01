@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { searchMovieRequest } from "../../../Services/omdbApi";
+import searchListMap from "../mapping/searchListMap";
 
 export const RootContext = React.createContext();
 
@@ -8,13 +9,15 @@ function RootProvider(props) {
   const [error, setError] = useState(null);
   const [searchPhrase, setSearchPhrase] = useState("");
   const [searchList, setSearchList] = useState({});
+  const [response, setResponse] = useState(null);
 
   const search = value => {
     setIsLoading(true);
     setSearchPhrase(value);
     searchMovieRequest(value, 1)
       .then(response => {
-        setSearchList(response.data);
+        setSearchList(response.data.Search.reduce(searchListMap, {}));
+        setResponse(response.data.Response);
         setIsLoading(false);
       })
       .catch(error => {
@@ -30,7 +33,8 @@ function RootProvider(props) {
         error,
         search,
         searchPhrase,
-        searchList
+        searchList,
+        response
       }}
     >
       {props.children}
