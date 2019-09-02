@@ -1,0 +1,14 @@
+.noResult {
+    display: flex;
+    justify-content: center;
+    color: rgb(144, 16, 16);
+    padding-top: 2vh;
+}
+
+.noResultIcon {
+    display: flex;
+    justify-content: center;
+    color: rgb(144, 16, 16);
+    padding-top: 10vh;
+
+}

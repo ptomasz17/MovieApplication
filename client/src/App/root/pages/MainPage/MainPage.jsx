@@ -17,6 +17,7 @@ function MainPage(props) {
         <h4>Type the title you would like to find: </h4>
         <DebounceInput
           autoComplete="off"
+          minLength={3}
           debounceTimeout={300}
           id="searchBox"
           className={cx(styles.input, "form-control")}
